@@ -1,63 +1,43 @@
-//vijos P1090
+//vijosP1257
+
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
-int C(long,int);
-int main() {
-    using namespace std;
-    int n, k;
-    vector<int> vecIn, vecMod;
-    cin >> n >> k;
-    long long sum = 0;
-    int temp;
-    for (int i = 0; i < n; ++i)
-    {
-        cin >> temp;
-        if (i == 0)
-        {
-            vecIn.push_back(temp % k);
-        } else
-        {
-            vecIn.push_back((temp + vecIn[i - 1]) % k);
-        }
-    }
-    sort(vecIn.begin(), vecIn.end());
-    auto item_head=vecIn.begin();
-    auto item_tail=vecIn.begin();
-    while(item_head!=vecIn.end())
-    {
-        while (*item_head == *item_tail)item_tail++;
-        long number=item_tail-item_head;
-        if(*item_head==0)
-            sum+=number;
-        if(number==1)
-        {
-            item_head=item_tail;
-            continue;
-        }
 
-        sum+=C(number,2);
-        if(sum>1234567)
-            sum%=1234567;
-        item_head=item_tail;
-
-    }
-    cout<<sum;
-    return 0;
-
-}
-int C(long m,int n)
+void swap(std::string & a,std::string & b)
 {
-    int deno=1,member=1;
+    std::string temp;
+    temp=a;
+    a=b;
+    b=temp;
+}
+
+int main()
+{
+    using namespace std;
+    int n;
+    cin>>n;
+    string *name=new string[n];
+    string *store=new string [n];
     for(int i=0;i<n;++i)
     {
-        deno*=m;
-        --m;
+        cin>>name[i]>>store[i];
     }
-    for(int i=n;i>0;--i)
+    for(int i=0;i<n;++i)
     {
-        member*=i;
+        for (int j = 0; j < n - 1 - i; ++j)
+        {
+            if(store[j].size()>store[j+1].size()||(store[j].size()==store[j+1].size()&&store[j]==store[j+1]&&name[j]<name[j+1])||
+                    (store[j].size()==store[j+1].size()&&store[j]>store[j+1]))
+            {
+                swap(store[j],store[j+1]);
+                swap(name[j],name[j+1]);
+            }
+        }
+
     }
-    return (int)deno/member;
+    for(int i=n-1;i>=0;--i)
+    {
+        cout<<name[i]<<endl;
+    }
+    return 0;
 }
