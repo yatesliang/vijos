@@ -1,43 +1,79 @@
-//vijosP1257
-
+//vijos P1040
 
 #include <iostream>
-
-void swap(std::string & a,std::string & b)
-{
-    std::string temp;
-    temp=a;
-    a=b;
-    b=temp;
-}
-
+#include <vector>
 int main()
 {
     using namespace std;
-    int n;
-    cin>>n;
-    string *name=new string[n];
-    string *store=new string [n];
-    for(int i=0;i<n;++i)
+    string num1;
+    string num2;
+    vector<int> vec1;
+    vector<int> vec2;
+    vector<int> v_sum,v_temp;
+    cin>>num1>>num2;
+    int temp;
+    int sum;
+    for(auto item=num1.end()-1;item>=num1.begin();--item)
     {
-        cin>>name[i]>>store[i];
+        temp=*item-48;
+        vec1.push_back(temp);
     }
-    for(int i=0;i<n;++i)
+    for(auto item=num2.end()-1;item>=num2.begin();--item)
     {
-        for (int j = 0; j < n - 1 - i; ++j)
+        temp=*item-48;
+        vec2.push_back(temp);
+    }
+    for(int i=0;i<num1.size();++i)
+    {
+        for(int j=0;j<num2.size();++j)
         {
-            if(store[j].size()>store[j+1].size()||(store[j].size()==store[j+1].size()&&store[j]==store[j+1]&&name[j]<name[j+1])||
-                    (store[j].size()==store[j+1].size()&&store[j]>store[j+1]))
+            sum=vec1[i]*vec2[j];
+            v_temp.push_back(sum);
+        }
+        if(v_sum.empty())
+        {
+            v_sum=v_temp;
+            for(int item=0;item<v_sum.size()-1;++item)
             {
-                swap(store[j],store[j+1]);
-                swap(name[j],name[j+1]);
+
+                v_sum[item+1]+=v_sum[item]/10;
+                v_sum[item]%=10;
+            }
+
+                temp=v_sum[(v_sum.size()-1)];
+                v_sum[(v_sum.size()-1)]%=10;
+                v_sum.push_back(temp/10);
+
+        }
+        else
+        {
+            for(int item=i,k=0;k<v_temp.size();++k,++item)
+            {
+
+
+                v_sum[item]+=v_temp[k];
+                if(item==v_sum.size()-1)
+                {
+                    v_sum.push_back(v_sum[item]/10);
+                    v_sum[item]%=10;
+                }
+                else
+                {
+                    v_sum[item+1]+=v_sum[item]/10;
+                    v_sum[item]%=10;
+                }
+
+
             }
         }
-
+        v_temp.clear();
     }
-    for(int i=n-1;i>=0;--i)
+    auto item=v_sum.end()-1;
+    if(*item==0)
+        --item;
+    for(;item>=v_sum.begin();--item)
     {
-        cout<<name[i]<<endl;
+        cout<<*item;
     }
     return 0;
 }
