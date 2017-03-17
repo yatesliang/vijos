@@ -1,22 +1,13 @@
-//vijos P1130
+//vijos P1307
 
 #include <iostream>
-int sum=1;
-void cal(int );
-int main()
-{
+int main() {
     using namespace std;
     int n;
-    cin>>n;
-    cal(n);
-    cout<<sum<<endl;
-
-}
-void cal(int a)
-{
-    for(int i=1;i<=a/2;++i)
-    {
-        sum++;
-        cal(i);
-    }
+    long long sum = 0;
+    cin >> n;
+    for (int i = n; i > 0; --i)
+        sum += i * i;
+    cout << sum << endl;
+    return 0;
 }
